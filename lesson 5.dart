@@ -70,24 +70,7 @@ class MyApp extends StatelessWidget {
         ),
         backgroundColor: Colors.grey[100],
         body: Feed(),
-        bottomNavigationBar: BottomNavigationBar(items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded, color: Colors.blue),
-            label: 'home',
-          ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Icon(Icons.search, color: Colors.blue),
-          ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Icon(Icons.notifications, color: Colors.blue),
-          ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Icon(Icons.mail_outline, color: Colors.blue),
-          )
-        ]),
+        // TODO: Make the Bottom navigation bar
       ),
     );
   }
