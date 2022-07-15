@@ -1,90 +1,99 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(Twitter());
+  runApp(const MyApp());
 }
 
-class Twitter extends StatelessWidget {
-  const Twitter({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Twitter',
-      home: Homepage(),
+      home: Todo(),
     );
   }
 }
 
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+class Todo extends StatefulWidget {
+  const Todo({Key? key}) : super(key: key);
 
   @override
-  State<Homepage> createState() => _HomepageState();
+  State<Todo> createState() => _TodoState();
 }
 
-class _HomepageState extends State<Homepage> {
+class _TodoState extends State<Todo> {
+  var ischecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        title: Image.asset(
-          'images/twitter.png',
-          scale: 8,
-        ),
-        elevation: 5.0,
+        title: Text('Todo'),
       ),
-      body: Container(
-        child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: Container(
+          child: Column(
+            children: [todoItem('farouk')],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              showDialog(context: context, builder: (context) => AddItem());
+            });
+          },
+          child: Icon(Icons.add)),
+    );
+  }
+
+  Row todoItem(itemtext) {
+    return Row(
+      children: [
+        Checkbox(
+            value: ischecked,
+            onChanged: (value) {
+              setState(() {
+                ischecked = value!;
+              });
+            }),
+        Text(
+          itemtext,
+          style: TextStyle(fontSize: 18),
+        )
+      ],
+    );
+  }
+}
+
+class AddItem extends StatefulWidget {
+  const AddItem({Key? key}) : super(key: key);
+
+  @override
+  State<AddItem> createState() => _AddItemState();
+}
+
+class _AddItemState extends State<AddItem> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      actions: [
+        Form(
+            child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.all(28.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Image.asset(
-                        'images/twitter.png',
-                        scale: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          'Twitter clone',
-                          style: TextStyle(
-                              fontSize: 18.0, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          '@twitterClone',
-                          style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromARGB(255, 128, 128, 128)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(
-                          '15h',
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.grey),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: 'Title of todo Item', border: OutlineInputBorder()),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(onPressed: () {}, child: Text('Add')),
+            ),
           ],
-        ),
-      ),
+        ))
+      ],
     );
   }
 }
